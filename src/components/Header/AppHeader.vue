@@ -1,0 +1,147 @@
+<template>
+<header :class="$style.header">
+  <RouterLink :class="$style.logo" to="/">
+      <span :class="$style.logoMark" aria-hidden="true">QS</span>
+        <h1>Qubica Store</h1>
+
+
+  </RouterLink>
+
+      <button
+        type="button"
+        :class="$style.themeToggle"
+        @click="onToggleTheme"
+        aria-label="Cambia tema visivo"
+      >
+        {{theme === 'light' ? '🌛 Dark mode' : '🌞 Light mode'}}
+      </button>
+
+      <nav :class="$style.nav">
+        <ul>
+          <li v-for="category in categories" :key="category">
+            <RouterLink :to="`/?category=${encodeURIComponent(category)}`">
+            {{ category }}
+            </RouterLink>
+          </li>
+        </ul>
+      </nav>
+    </header>
+</template>
+
+
+<script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { getAllCategories } from '../../api/fakeStoreApi';
+
+  defineProps<
+{
+  theme: 'light'|'dark';
+  onToggleTheme: () => void;
+}
+  >()
+
+const categories = ref<string[]>([])
+
+onMounted(
+  () => {
+    getAllCategories()
+      .then(
+        (data) => {
+          categories.value = data
+        }
+      )
+      .catch(
+        () => {
+          categories.value = [];
+        }
+      )
+  }
+)
+
+</script>
+
+
+<style module>
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--bg-primary);
+    text-align: center;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    text-decoration: none;
+    color: var(--text-primary);
+    font-size: var(--font-size-logo);
+    font-weight: 800;
+}
+.logo h1 { margin: 0; font-size: inherit; }
+
+.logoMark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.8em;
+    height: 2em;
+    background-color: var(--color-brand);
+    color: var(--color-button-text);
+    border-radius: var(--border-radius);
+    font-size: 0.8em;
+    font-weight: 600;
+    position: relative;
+    top: 0.04em;
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+}
+
+.nav ul {
+    display: flex;
+    gap: var(--spacing-sm);
+    overflow-x: auto;
+    list-style: none;
+    margin: 0 calc(var(--spacing-sm) * -1);
+    padding: var(--spacing-sm);
+    max-width: 100%;
+}
+
+.nav a {
+    display: block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    color: var(--text-primary);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: var(--transition-base);
+}
+
+.nav a:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+}
+
+.themeToggle {
+    background: var(--bg-secondary);
+    border: 1px solid var(--color-border);
+    color: var(--text-primary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    align-self: center
+}
+</style>
