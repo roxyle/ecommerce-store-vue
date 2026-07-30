@@ -16,7 +16,7 @@ Questo port raggiunge gli stessi acceptance criteria e bonus del lavoro in React
 - unit test su formatPrice con Vitest
 - workflow a branch con Pull Request verso main
 
-Non sono ancora coperti: carrello e login, la gestione visuale degli errori, e il deploy (assenti anche nella consegna React, non erano Acceptance Criteria e ho preferito concentrarmi su altri bonus)
+Non sono ancora coperti: carrello e login, la gestione visuale degli errori, e il deploy (assenti, tranne il deploy, anche nella consegna React, non erano Acceptance Criteria e ho preferito concentrarmi su altri bonus)
 
 L'analisi, le decisioni e le scelte di design system e di accessibilità sono documentate nel Readme della repository [ecommerce-qubica-store](https://github.com/roxyle/ecommerce-qubica-store) (il tech test in React). Consiglio di leggere prima quel readme e poi tornare qui.
 
